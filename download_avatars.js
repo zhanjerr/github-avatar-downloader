@@ -1,4 +1,6 @@
 var request = require('request');
+var fs = require('fs')
+
 var GITHUB_USER = "zhanjerr";
 var GITHUB_TOKEN = "afb30523e97255f70672386d0110e2d6ca0e0132";
 
@@ -38,9 +40,45 @@ function getRepoContributors(repoOwner, repoName, cb) {
   //   })
 };
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  result.forEach(function(object){
-    console.log(object.avatar_url);
-  });
-});
+// getRepoContributors("jquery", "jquery", function(err, result) {
+//   console.log("Errors:", err);
+//   result.forEach(function(object){
+//     console.log(object.avatar_url);
+//   });
+// });
+var temp_url = 'https://avatars3.githubusercontent.com/u/1615?v=3'
+var temp_path = './avatars/1615.jpg'
+
+function downloadImageByURL(url, filePath) {
+  // ...
+request.get(url)
+  .on('error', function(err){
+    console.log("got an error!");
+    return
+  })
+  .on('response', function(response){
+    console.log('Response Status Code: ', response.statusCode);
+    console.log("response content type: " + response.headers['content-type']);
+    console.log("response message: " + response.statusMessage)
+  })
+  .pipe(fs.createWriteStream(filePath));
+}
+
+downloadImageByURL(temp_url,temp_path);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

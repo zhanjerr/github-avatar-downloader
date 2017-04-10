@@ -1,0 +1,22 @@
+{
+  "name": "github-avatar-downloader",
+  "version": "1.0.0",
+  "description": "pull avatar from a repo on github via github API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhanjerr/github_avatar.git"
+  },
+  "author": "jz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhanjerr/github_avatar/issues"
+  },
+  "homepage": "https://github.com/zhanjerr/github_avatar#readme",
+  "dependencies": {
+    "request": "^2.81.0"
+  }
+}

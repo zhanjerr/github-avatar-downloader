@@ -12,13 +12,13 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   request (requestURL, (error, response, body) =>{
     if (error){
-      cb(error);
+      cb(error,"");
       return;
     };
 
     if (response.statusCode == 200){
       var json = JSON.parse(body);
-      console.log(json);
+      cb("",json);
     } else if (response.statusCode == 404) {
       console.log("Object not found")
     }
@@ -40,5 +40,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
-  console.log("Result:", result);
+  result.forEach(function(object){
+    console.log(object.avatar_url);
+  });
 });

@@ -60,8 +60,8 @@ request.get(url)
     return
   })
   .on('response', function(response){
-    console.log('Response Status Code: ', response.statusCode);
-    console.log("response content type: " + response.headers['content-type']);
+    // console.log('Response Status Code: ', response.statusCode);
+    // console.log("response content type: " + response.headers['content-type']);
     console.log("response message: " + response.statusMessage)
   })
   .pipe(fs.createWriteStream(filePath));
@@ -71,18 +71,18 @@ request.get(url)
 
 
 // getRepoContributors makes a request for JSON, getting back an array of contributors.
-var contributorsList = [];
+// var contributorsList = {};
 
-getRepoContributors(owner, repo, function(err, result) {
+getRepoContributors(owner, repo, callback);
+
+function callback(err, result) {
   result.forEach(function(object){
-    contributorsList.push(object.avatar_url);
-    console.log(object.avatar_url);
+    downloadImageByURL(object.avatar_url, "./avatars/" + object.login + ".jpg")
+    // contributorsList[object.login] = object.avatar_url;
+    // console.log(object.avatar_url);
   })
-
-console.log(contributorsList);
-});
-
-
+// console.log(contributorsList);
+}
 
 // getRepoContributors passes this data to cb, an anonymous callback function that it is given.
 // cb loops through each item in the array:

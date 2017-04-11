@@ -1,6 +1,9 @@
 var request = require('request');
 var fs = require('fs')
 
+var owner = process.argv[2];
+var repo = process.argv[3];
+
 var GITHUB_USER = "zhanjerr";
 var GITHUB_TOKEN = "afb30523e97255f70672386d0110e2d6ca0e0132";
 
@@ -64,17 +67,28 @@ request.get(url)
   .pipe(fs.createWriteStream(filePath));
 }
 
-downloadImageByURL(temp_url,temp_path);
+// downloadImageByURL(temp_url,temp_path);
+
+
+// getRepoContributors makes a request for JSON, getting back an array of contributors.
+var contributorsList = [];
+
+getRepoContributors(owner, repo, function(err, result) {
+  result.forEach(function(object){
+    contributorsList.push(object.avatar_url);
+    console.log(object.avatar_url);
+  })
+
+console.log(contributorsList);
+});
 
 
 
-
-
-
-
-
-
-
+// getRepoContributors passes this data to cb, an anonymous callback function that it is given.
+// cb loops through each item in the array:
+// It constructs a file path using the login value (e.g., "avatars/dhh.jpg")
+// It then passes the avatar_url value and the file path to downloadImageByURL
+// downloadImageByURL fetches the desired avatar_url and saves this information to the given filePath
 
 
 

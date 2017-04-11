@@ -27,6 +27,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
     } else if (response.statusCode == 404) {
       console.log("Object not found")
     }
+
   });
   // request.get(requestURL)
   //   .on('response', function(response){
@@ -54,17 +55,17 @@ var temp_path = './avatars/1615.jpg'
 
 function downloadImageByURL(url, filePath) {
   // ...
-request.get(url)
-  .on('error', function(err){
-    console.log("got an error!");
-    return
-  })
-  .on('response', function(response){
-    // console.log('Response Status Code: ', response.statusCode);
-    // console.log("response content type: " + response.headers['content-type']);
-    console.log("response message: " + response.statusMessage)
-  })
-  .pipe(fs.createWriteStream(filePath));
+  request.get(url)
+    .on('error', function(err){
+      console.log("got an error!");
+      return
+    })
+    .on('response', function(response){
+      // console.log('Response Status Code: ', response.statusCode);
+      // console.log("response content type: " + response.headers['content-type']);
+      console.log("response message: " + response.statusMessage)
+    })
+    .pipe(fs.createWriteStream(filePath));
 }
 
 // downloadImageByURL(temp_url,temp_path);
@@ -72,8 +73,11 @@ request.get(url)
 
 // getRepoContributors makes a request for JSON, getting back an array of contributors.
 // var contributorsList = {};
-
-getRepoContributors(owner, repo, callback);
+if(!owner || !repo){
+    console.log("Error! Please follow the following format download_avatar[owner repo]")
+  } else{
+  getRepoContributors(owner, repo, callback);
+  };
 
 function callback(err, result) {
   result.forEach(function(object){

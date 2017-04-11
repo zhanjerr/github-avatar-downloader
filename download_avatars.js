@@ -1,11 +1,13 @@
 var request = require('request');
 var fs = require('fs')
+require('dotenv').config();
 
 var owner = process.argv[2];
 var repo = process.argv[3];
 
-var GITHUB_USER = "zhanjerr";
-var GITHUB_TOKEN = "afb30523e97255f70672386d0110e2d6ca0e0132";
+var GITHUB_USER = process.env.GITHUB_USER;
+var GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
 
 function getRepoContributors(repoOwner, repoName, cb) {
   var requestURL = {
@@ -18,6 +20,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request (requestURL, (error, response, body) =>{
     if (error){
       cb(error,"");
+      console.log("error here");
       return;
     };
 
@@ -26,8 +29,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
       cb("",json);
     } else if (response.statusCode == 404) {
       console.log("Object not found")
+    } else {
+      console.log("Uncaught Error: " + response.statusCode + ": " +response.statusMessage);
     }
-
   });
   // request.get(requestURL)
   //   .on('response', function(response){
